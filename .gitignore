@@ -1,0 +1,13 @@
+[Bb]uild
+
+**/x64
+**/x86
+
+.vs
+.idea
+
+*.dll
+*.lib
+*.so
+*.a
+*.sln
