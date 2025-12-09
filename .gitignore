@@ -1,13 +1,49 @@
-[Bb]uild
+# Prerequisites
+*.d
 
-**/x64
-**/x86
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
 
-.vs
-.idea
+# Precompiled Headers
+*.gch
+*.pch
 
-*.dll
-*.lib
+# Linker files
+*.ilk
+
+# Debugger Files
+*.pdb
+
+# Compiled Dynamic libraries
 *.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
 *.a
-*.sln
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# debug information files
+*.dwo
+
+Test
+
+[Bb]uild
+*/venv
+*/.venv
+.venv
+.vscode
