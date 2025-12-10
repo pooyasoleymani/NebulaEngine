@@ -11,6 +11,8 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+option(BUILD_TEST "Build Tests" ON)
+
 # Better warnings (cross-platform)
 
 if (MSVC)
@@ -25,7 +27,15 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Add Engine moduls
 
-add_subdirectory(engine)
+add_subdirectory(${CMAKE_SOURCE_DIR}/engine)
 
-add_subdirectory(external/catch2)
-add_subdirectory(tests)
+if (BUILD_TESTS)
+    include(Ctest)
+    enable_testing()
+    add_subdirectory(${CMAKE_SOURCE_DIR}/external/catch2)
+    add_subdirectory(${CMAKE_SOURCE_DIR}/tests)
+endif()
+
+
+
+
