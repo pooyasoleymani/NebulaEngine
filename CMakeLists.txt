@@ -26,3 +26,6 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Add Engine moduls
 
 add_subdirectory(engine)
+
+add_subdirectory(external/catch2)
+add_subdirectory(tests)
