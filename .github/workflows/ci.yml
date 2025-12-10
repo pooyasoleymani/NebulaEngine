@@ -37,6 +37,19 @@ jobs:
         shell: bash
         run: echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
+      - name: Install dependencies (Linux)
+        if: runner.os != 'Windows'
+        run: |
+          sudo apt-get update || true
+          sudo apt-get install -y cmake g++ catch2 || true
+          sudo apt-get install -y gcovr || true 
+      
+      - name: Install dependencies (Windows)
+        if: runner.os == 'Windows'
+        run: | 
+          choco install cmake.install --installargs '"ADD_CMAKE_TO_PATH=System"' -y || true
+          pip install gcovr || true
+           
       - name: Configure CMake
         run: cmake -B ${{ steps.strings.outputs.build-output-dir }} \
           -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }} \
