@@ -1,4 +1,4 @@
-# Contributing to Financial Analytics Tool
+# Contributing to Nebula-Engine
 
 Thank you for your interest in contributing! 🎉
 
