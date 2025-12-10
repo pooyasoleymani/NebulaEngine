@@ -27,15 +27,13 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Add Engine moduls
 
-add_subdirectory(${CMAKE_SOURCE_DIR}/engine)
+add_subdirectory(${PROJECT_SOURCE_DIR}/engine)
 
 if (BUILD_TEST)
     include(CTest)
     enable_testing()
-    add_subdirectory(${CMAKE_SOURCE_DIR}/external/catch2)
-    add_subdirectory(${CMAKE_SOURCE_DIR}/tests)
+    add_subdirectory(${PROJECT_SOURCE_DIR}/external/catch2)
+    add_subdirectory(${PROJECT_SOURCE_DIR}/tests)
 endif()
-
-
 
 
