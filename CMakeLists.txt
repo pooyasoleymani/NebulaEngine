@@ -34,8 +34,8 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/engine)
 if (BUILD_TEST)
     include(CTest)
     enable_testing()
-    add_subdirectory(${PROJECT_SOURCE_DIR}/external/catch2)
-    add_subdirectory(${PROJECT_SOURCE_DIR}/tests)
+    add_subdirectory(external/catch2)
+    add_subdirectory(tests)
 endif()
 
 
