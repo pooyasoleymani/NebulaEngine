@@ -8,3 +8,16 @@ target_include_directories(
     include/nebula
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
+
+# Interface library for common configuration
+
+add_library(nebula_config INTERFACE)
+
+target_include_directories(
+    nebula_config INTERFACE
+    include
+)
+
+# Link the core library with the configuration interface
+
+target_link_libraries(core PUBLIC nebula_config)
