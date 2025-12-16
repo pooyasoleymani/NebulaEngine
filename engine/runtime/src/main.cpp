@@ -1,11 +1,17 @@
 #include "pch.hpp"
 #include <nebula/core.hpp>
-
+#include "nebula/plugin_api.hpp"
+#ifdef __unix__
+    #include <dlfcn.h>
+#endif
 
 
 int main() {
+    int a[3] = {1, 2, 3};
+    
     nebula::Core core;
-
+   
+    std::cout << a[4] << "\n";
     std::cout << "Runtime started\n";
     std::cout << "Core version: " << core.version() << "\n";
 
@@ -15,7 +21,23 @@ int main() {
             std::cout << "Plugin A loaded!" << std::endl;
         } else {
             std::cerr << "Error loading Plugin A: " << dlerror() << std::endl
+            return 1;
+        auto create = reinterpret_cast<nebula::CreatePluginFunc>(
+        dlsym(handle, "create_plugin")
+    );
+
+    if (!create) {
+        std::cerr << "create_plugin not found\n";
+        return 1;
+    }
+
+    nebula::Plugin* plugin = create();
+    plugin->on_load();
+
+    delete plugin;
+    dlclose(handle)
     #endif
+
 
     return 0;
 }
