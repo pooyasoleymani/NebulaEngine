@@ -1,3 +1,5 @@
+include(cmake/nebula_config.cmake)
+
 add_subdirectory(interfaces)
 
 add_subdirectory(core)
