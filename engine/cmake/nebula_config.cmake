@@ -11,8 +11,8 @@ if (MSVC)
     target_compile_options(nebula_config
         INTERFACE
             /W4
-            /permissive-
     )
+
 else()
     target_compile_options(nebula_config
         INTERFACE
@@ -34,4 +34,5 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
         INTERFACE
             $<$<CONFIG:Debug>:-fsanitize=address,undefined>
     )
+ 
 endif()

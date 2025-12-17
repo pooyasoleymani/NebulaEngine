@@ -7,11 +7,7 @@
 
 
 int main() {
-    int a[3] = {1, 2, 3};
-    
     nebula::Core core;
-   
-    std::cout << a[4] << "\n";
     std::cout << "Runtime started\n";
     std::cout << "Core version: " << core.version() << "\n";
 
