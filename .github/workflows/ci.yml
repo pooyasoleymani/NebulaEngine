@@ -14,20 +14,16 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
         build_type: [Release]
-        c_compiler: [gcc, clang, cl]
         cpp_compiler: [g++, clang++, cl]
 
         include:
           - os: windows-latest
-            c_compiler: cl
             cpp_compiler: cl
           - os: ubuntu-latest
-            c_compiler: gcc
             cpp_compiler: g++
           - os: ubuntu-latest
-            c_compiler: clang
             cpp_compiler: clang++
-            
+
 
     steps:
       - uses: actions/checkout@v3
@@ -37,10 +33,22 @@ jobs:
         shell: bash
         run: echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
+      - name: Install dependencies (Linux)
+        if: runner.os != 'Windows'
+        run: |
+          sudo apt-get update || true
+          sudo apt-get install -y cmake g++ catch2 || true
+          sudo apt-get install -y gcovr || true 
+      
+      - name: Install dependencies (Windows)
+        if: runner.os == 'Windows'
+        run: | 
+          choco install cmake.install --installargs '"ADD_CMAKE_TO_PATH=System"' -y || true
+          pip install gcovr || true
+           
       - name: Configure CMake
         run: cmake -B ${{ steps.strings.outputs.build-output-dir }} \
           -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }} \
-          -DCMAKE_C_COMPILER=${{ matrix.c_compiler }} \
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
           -S ${{ github.workspace }}
 

@@ -40,7 +40,8 @@
 # debug information files
 *.dwo
 
-Test
+Testing
+
 
 [Bb]uild
 */venv

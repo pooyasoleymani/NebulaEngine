@@ -7,22 +7,30 @@ project(NebulaEngine
 
 # -------------- Global settings --------------
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-# Better warnings (cross-platform)
+option(BUILD_TEST "Build Tests" ON)
 
-if (MSVC)
-    add_compile_options(/W4)
-else()
-    add_compile_options(-Wall -Wextra -Wpedantic)
-endif()
-
-# Enable floders in IDEs
-
+# IDE folders
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-# Add Engine moduls
-
+# Add engine modules
 add_subdirectory(engine)
+
+
+# Tests
+if (BUILD_TEST)
+    include(CTest)
+    enable_testing()
+    #add_subdirectory(external/catch2)
+    include(FetchContent)
+    FetchContent_Declare(
+        Catch2
+        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+        GIT_TAG        v3.8.1 # or a later release
+    )
+    FetchContent_MakeAvailable(Catch2)
+    add_subdirectory(tests)
+endif()
