@@ -19,10 +19,18 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Add engine modules
 add_subdirectory(engine)
 
+
 # Tests
 if (BUILD_TEST)
     include(CTest)
     enable_testing()
-    add_subdirectory(external/catch2)
+    #add_subdirectory(external/catch2)
+    include(FetchContent)
+    FetchContent_Declare(
+        Catch2
+        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+        GIT_TAG        v3.8.1 # or a later release
+    )
+    FetchContent_MakeAvilable(Catch2)
     add_subdirectory(tests)
 endif()
