@@ -32,6 +32,7 @@ int main() {
 
     delete plugin;
     dlclose(handle)
+}
     #endif
 
 
