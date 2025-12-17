@@ -30,7 +30,6 @@ int main() {
     nebula::Plugin* plugin = create();
     plugin->on_load();
 
-    delete plugin;
     dlclose(handle)
 }
     #endif
