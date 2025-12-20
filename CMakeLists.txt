@@ -29,7 +29,7 @@ if (BUILD_TEST)
     if (${Catch2_FOUND})
         message(STATUS "Catch2 founded.")
     else()
-        add_subdirectory(external/catch2)
+        #add_subdirectory(external/catch2)
         include(FetchContent)
         FetchContent_Declare(
             Catch2
