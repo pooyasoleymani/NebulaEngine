@@ -33,7 +33,5 @@ int main() {
     dlclose(handle)
 }
     #endif
-
-
     return 0;
 }

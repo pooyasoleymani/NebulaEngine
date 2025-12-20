@@ -1,5 +1,6 @@
 #include "nebula/core.hpp"
+#include "version.hpp"
 
 std::string nebula::Core::version() const {
-     return "Nebula Core 0.1.0";
+     return BUILD_VERSION;
      }
