@@ -1,1 +1,1 @@
-from .nebula import Core
+from ._native import Core  # avoids collisions

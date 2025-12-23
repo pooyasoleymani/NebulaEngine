@@ -1,6 +1,6 @@
-import nebula
+from nebula import Core
 
-core = nebula.Core()
+core = Core()
 
 print(core.version())
 print(help(core))

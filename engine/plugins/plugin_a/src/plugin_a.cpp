@@ -22,6 +22,8 @@ namespace nebula {
     };  
 }; // namespace nebula
 
+/// @brief This function create Plugin.
+/// @return Plugin*
 extern "C" NUBELA_API nebula::Plugin* create_plugin() {
     return new nebula::PluginA();
 }

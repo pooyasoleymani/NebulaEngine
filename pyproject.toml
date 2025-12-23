@@ -7,8 +7,8 @@ name = "nebula-engine"
 version = "0.1.0"
 requires-python = ">=3.9"
 
-[tool.scikit-build]
-cmake.source-dir = "."
-wheel.packages = ["nebula"]
-wheel.package-dir = "python"
-wheel.cmake = true
+[tool.scikit-build.wheel.cmake]
+source-dir = "."
+packages = ["nebula"]
+package-dir = "python"
+cmake = true

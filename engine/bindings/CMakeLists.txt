@@ -25,3 +25,9 @@ add_custom_command(
     $<TARGET_FILE:${MODULE_NAME}>
     ${CMAKE_SOURCE_DIR}
 )
+
+set_target_properties(
+    ${MODULE_NAME} PROPERTIES
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/python/nebula/$<CONFIG>"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/python/nebula/$<CONFIG>"
+)
