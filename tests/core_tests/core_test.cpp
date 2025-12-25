@@ -6,5 +6,5 @@ TEST_CASE("Core Test", "[Core]"){
 
     nebula::Core core;
     
-    REQUIRE( core.version() == "Nebula Core 0.1.0");
+    REQUIRE( core.version() == "0.1.0");
 };

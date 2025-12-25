@@ -1,3 +1,5 @@
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
+
 add_executable(test_core ${CMAKE_CURRENT_SOURCE_DIR}/core_tests/core_test.cpp)
 
 target_include_directories(
@@ -12,3 +14,14 @@ target_precompile_headers(test_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/pch.hpp)
 target_link_libraries(test_core PUBLIC core Catch2::Catch2WithMain)
 
 add_test(NAME CoreTest COMMAND test_core)
+
+add_test(
+    NAME py_import
+    COMMAND ${Python3_EXECUTABLE} -c
+    "import os,sys; sys.path.insert(0, r'${CMAKE_BINARY_DIR}/python/${CMAKE_BUILD_TYPE}');import nebula;nebula.Core.version()"
+)
+
+set_tests_properties(
+    py_import PROPERTIES
+    ENVIRONMENT "PYTHONPATH=${CMAKE_BINARY_DIR}/python/${CMAKE_BUILD_TYPE}}"
+    )

@@ -17,8 +17,9 @@ option(BUILD_TEST "Build Tests" ON)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Add external dependencies
+
 add_subdirectory(external/pybind11)
-find_package(Pybind11)
+#find_package(pybind11 CONFIG REQUIRED)
 
 # Add engine modules
 add_subdirectory(engine)

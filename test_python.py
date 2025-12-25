@@ -1,6 +1,7 @@
-from nebula import Core
+from nebula import Core, ConfigError
 
-core = Core()
 
+core = Core.create()
 print(core.version())
-print(help(core))
+
+core.load_config("config.inid")

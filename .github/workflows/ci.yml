@@ -45,6 +45,7 @@ jobs:
         run: | 
           choco install cmake.install --installargs '"ADD_CMAKE_TO_PATH=System"' -y || true
           pip install gcovr || true
+          pip install pybind11 || true
            
       - name: Configure CMake
         run: cmake -B ${{ steps.strings.outputs.build-output-dir }} \
