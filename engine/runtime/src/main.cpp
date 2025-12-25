@@ -16,10 +16,10 @@ int main() {
         if (plugin) {
             std::cout << "Plugin A loaded!" << std::endl;
         } else {
-            std::cerr << "Error loading Plugin A: " << dlerror() << std::endl
+            std::cerr << "Error loading Plugin A: " << dlerror() << std::endl;
             return 1;
         auto create = reinterpret_cast<nebula::CreatePluginFunc>(
-        dlsym(handle, "create_plugin")
+        dlsym(handle, "create_plugin");
     );
 
     if (!create) {
