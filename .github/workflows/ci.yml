@@ -27,6 +27,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
 
       - name: Set reusable strings
         id: strings
@@ -37,7 +39,7 @@ jobs:
         if: runner.os != 'Windows'
         run: |
           sudo apt-get update || true
-          sudo apt-get install -y cmake g++ catch2 || true
+          sudo apt-get install -y cmake g++ || true
           sudo apt-get install -y gcovr || true 
       
       - name: Install dependencies (Windows)
@@ -45,7 +47,6 @@ jobs:
         run: | 
           choco install cmake.install --installargs '"ADD_CMAKE_TO_PATH=System"' -y || true
           pip install gcovr || true
-          pip install pybind11 || true
            
       - name: Configure CMake
         run: cmake -B ${{ steps.strings.outputs.build-output-dir }} \

@@ -19,7 +19,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Add external dependencies
 
 add_subdirectory(external/pybind11)
-#find_package(pybind11 CONFIG REQUIRED)
+find_package(pybind11 CONFIG REQUIRED)
 
 # Add engine modules
 add_subdirectory(engine)
