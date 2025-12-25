@@ -20,4 +20,5 @@ namespace nebula {
     };
 
     using CreatePluginFunc = Plugin* (*)();
+    using DestroyPluginFunc = void (*)(Plugin*);
 };

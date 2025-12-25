@@ -17,11 +17,9 @@ add_test(NAME CoreTest COMMAND test_core)
 
 add_test(
     NAME py_import
-    COMMAND ${Python3_EXECUTABLE} -c
-    "import os,sys; sys.path.insert(0, r'${CMAKE_BINARY_DIR}/python/${CMAKE_BUILD_TYPE}');import nebula;nebula.Core.version()"
+    COMMAND ${Python3_EXECUTABLE} "${PROJECT_SOURCE_DIR}/test_python.py"
 )
 
-set_tests_properties(
-    py_import PROPERTIES
-    ENVIRONMENT "PYTHONPATH=${CMAKE_BINARY_DIR}/python/${CMAKE_BUILD_TYPE}}"
-    )
+set_tests_properties(py_import PROPERTIES
+    ENVIRONMENT "PYTHONPATH=${CMAKE_BINARY_DIR}/python;PYTHONHOME="
+)
