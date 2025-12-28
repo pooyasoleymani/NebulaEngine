@@ -15,11 +15,16 @@ target_link_libraries(test_core PUBLIC core Catch2::Catch2WithMain)
 
 add_test(NAME CoreTest COMMAND test_core)
 
+add_custom_command(
+    OUTPUT "${PROJECT_SOURCE_DIR}/test_python.py"
+    COMMAND ${Python3_EXECUTABLE} -c "import sys, pathlib; sys.path.insert(0, ${CMAKE_BINARY_DIR}/python/$<CONFIG>)"
+)
+
 add_test(
     NAME py_import
     COMMAND ${Python3_EXECUTABLE} "${PROJECT_SOURCE_DIR}/test_python.py"
 )
 
 set_tests_properties(py_import PROPERTIES
-    ENVIRONMENT "PYTHONPATH=${CMAKE_BINARY_DIR}/python;PYTHONHOME="
+    ENVIRONMENT "PYTHONPATH=${CMAKE_BINARY_DIR}/python/$<CONFIG>;PYTHONHOME="
 )
