@@ -6,5 +6,6 @@ TEST_CASE("Core Test", "[Core]"){
 
     nebula::Core core;
     
-    REQUIRE( core.Version() == "0.1.0");
+    std::string v = core.Version();
+    REQUIRE( v == "0.1.0");
 };
