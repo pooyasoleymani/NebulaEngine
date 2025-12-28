@@ -1,34 +1,33 @@
 name: wheels
 
 on:
-    push:
-    pull_request:
+  push:
+  pull_request:
 
 jobs:
-    build_wheels:
-        strategy:
-            matrix:
-                os: [windows-latest, ubuntu-latest]
-            
-        runs-on: ${{matrix.os}}
-            
-        steps:
-          - uses: action/checkout@v4
-          - uses: action/setup-python@v5
-            with:
-                 python-version: 3.12
-          - name: Inatall build tooling
-            run: python -m pip install -U pip cibuildwheel
-        
-          - name: Build wheels
-            env: 
-              CIBW_BUILD: "cp310-* cp311-* cp312-*"
-              CIBW_SKIP: "*-musllinux_*"
-            
-            run: python -m cibuildwheel --output-dir wheelhouse
+  build-wheels:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
 
-          - uses: action/upload-artifact@v4
-            with:
-                name: wheels-${{ matrix.os }}
-                path: wheelhouse/*.whl
+    steps:
+      - uses: actions/checkout@v4
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build tooling
+        run: python -m pip install -U pip cibuildwheel
+
+      - name: Build wheels
+        env:
+          CIBW_BUILD: "cp310-* cp311-* cp312-*"
+          CIBW_SKIP: "*-musllinux_*"
+        run: python -m cibuildwheel --output-dir wheelhouse
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ matrix.os }}
+          path: wheelhouse/*.whl
