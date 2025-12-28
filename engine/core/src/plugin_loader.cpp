@@ -80,8 +80,8 @@ namespace nebula {
                     continue;
                 }
 
-                auto create = reinterpret_cast<CreatePluginFn>(dlsym(h, "create_plugin"));
-                auto destroy = reinterpret_cast<DestroyPluginFn>(dlsym(h, "destroy_plugin"));
+                auto create = reinterpret_cast<CreatePluginFunc>(dlsym(h, "create_plugin"));
+                auto destroy = reinterpret_cast<DestroyPluginFunc>(dlsym(h, "destroy_plugin"));
 
                 if (!create || !destroy) {
                     results.push_back(label + " => missing create_plugin/destroy_plugin");
