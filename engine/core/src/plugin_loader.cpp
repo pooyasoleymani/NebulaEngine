@@ -104,7 +104,7 @@ namespace nebula {
 
             #endif
 
-            return results;
         }
+        return results;
     }
 }
