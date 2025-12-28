@@ -24,6 +24,8 @@ add_custom_target(nebula_codegen
 
 add_library(core STATIC src/core.cpp ${GENERATED_DIR}/version.hpp)
 
+target_sources(core PRIVATE src/plugin_loader.cpp)
+
 target_include_directories(
     core PUBLIC
     include

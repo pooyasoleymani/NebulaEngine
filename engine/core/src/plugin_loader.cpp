@@ -35,4 +35,75 @@ namespace nebula {
             if (looks_like_plugin(p)) out.push_back(p.string());
         }
     }
+
+    std::vector<std::string> probe_plugins(const std::string& dir, bool call_on_load)
+    {
+        std::vector<std::string> result;
+        auto files = list_plugin_files(dir);
+
+        for (const auto& path: files) {
+            std::string label = path;
+        
+            #ifdef _WIN32
+                HMODULE h = LoadLibraryA(path.c_str());
+                if(!h)
+                    {
+                        result.push_back(label + " => LoadLibrary failsd");
+                        continue;
+                    }
+                auto create = reinterpret_cast<CreatePluginFunc>(GetProcAddress(h, "CreatePlugin"));
+                auto destroy = reinterpret_cast<DestroyPluginFunc>(GetProcAddress(h, "DestroyPlugin"));
+                    
+                if(!create || !destroy)
+                {
+                    result.push_back(label + " => missing CreatePlugin/DestroyPlugin");
+                    FreeLibrary(h);
+                    continue;
+                }
+                
+                Plugin* p = create();
+                if(!p) {
+                    result.push_back(label + " => CreatePlugin return null");
+                    FreeLibrary(h);
+                    continue;
+                }
+
+                result.push_back(label + " => " + std::string(p->name()));
+                if(call_on_load) p->on_load();
+
+                destroy(p);
+                FreeLibrary(h);
+
+            #else
+                void* h = dlopen(path.c_str(), RTLD_NOW);
+                if(!h) {
+                    result.push_back(label + " => dlopen faild:" + std::string(dlerror()));
+                    continue;
+                }
+                auto create = reinterpret_cast<CreatePluginFn>(dlsym(h, "CreatePlugin"));
+                auto destroy = reinterpret_cast<DestroyPluginFn>(dlsym(h, "DestroyPlugin"));
+
+                if (!create || !destroy) {
+                    results.push_back(label + " => missing CreatePlugin/DestroyPlugin");
+                    dlclose(h);
+                    continue;
+                }
+
+                Plugin* p = create();
+                if (!p) {
+                    results.push_back(label + " => CreatePlugin returned null");
+                    dlclose(h);
+                    continue;
+                }
+
+                results.push_back(label + " => " + std::string(p->name()));
+                if (call_on_load) p->on_load();
+
+                destroy(p);
+                dlclose(h);
+            #endif
+
+            return result;
+        }
+    }
 }

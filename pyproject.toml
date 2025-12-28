@@ -12,3 +12,7 @@ source-dir = "."
 packages = ["nebula"]
 package-dir = "python"
 cmake = true
+
+[project.scripts]
+
+nebula = "nebula.cli:main"

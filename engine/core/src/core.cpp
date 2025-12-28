@@ -1,15 +1,16 @@
 #include "pch.hpp"
 #include "include/nebula/core.hpp"
+#include "include/nebula/plugin_loader.hpp"
 #include "version.hpp"
 
 namespace nebula {
-     Core* create_core() { return new Core(); }
+     Core* CreateCore() { return new Core(); }
      
-     void destroy_core(Core* p) {delete p;}
+     void DestroyCore(Core* p) {delete p;}
 
-     const char* Core::version() const { return BUILD_VERSION; }
+     const char* Core::Version() const { return BUILD_VERSION; }
      
-     void Core::load_config(std::string& cfg)
+     void Core::LoadConfig(std::string& cfg)
 {
      if (cfg == "config.ini")
           {
