@@ -14,16 +14,15 @@
 namespace fs = std::filesystem;
 
 namespace nebula {
-    static bool looks_like_plugin(const fs::path& p)
-    {
-        #ifdef _WIN32
-            return p.extension() == ".dll";
-        #elif __APPLE__
-            return p.extension() == ".dylib";
-        #else
-            return p.extention() == ".so";
-        #endif
-    }
+    static bool looks_like_plugin(const fs::path& p) {
+#ifdef _WIN32
+    return p.extension() == ".dll";
+#elif __APPLE__
+    return p.extension() == ".dylib";
+#else
+    return p.extension() == ".so";
+#endif
+}
 
     std::vector<std::string> list_plugin_files(const std::string& dir) {
         std::vector<std::string> out;
@@ -76,22 +75,23 @@ namespace nebula {
 
             #else
                 void* h = dlopen(path.c_str(), RTLD_NOW);
-                if(!h) {
-                    result.push_back(label + " => dlopen faild:" + std::string(dlerror()));
+                if (!h) {
+                    results.push_back(label + " => dlopen failed: " + std::string(dlerror()));
                     continue;
                 }
-                auto create = reinterpret_cast<CreatePluginFn>(dlsym(h, "CreatePlugin"));
-                auto destroy = reinterpret_cast<DestroyPluginFn>(dlsym(h, "DestroyPlugin"));
+
+                auto create = reinterpret_cast<CreatePluginFn>(dlsym(h, "create_plugin"));
+                auto destroy = reinterpret_cast<DestroyPluginFn>(dlsym(h, "destroy_plugin"));
 
                 if (!create || !destroy) {
-                    results.push_back(label + " => missing CreatePlugin/DestroyPlugin");
+                    results.push_back(label + " => missing create_plugin/destroy_plugin");
                     dlclose(h);
                     continue;
                 }
 
                 Plugin* p = create();
                 if (!p) {
-                    results.push_back(label + " => CreatePlugin returned null");
+                    results.push_back(label + " => create_plugin returned null");
                     dlclose(h);
                     continue;
                 }
@@ -101,6 +101,7 @@ namespace nebula {
 
                 destroy(p);
                 dlclose(h);
+
             #endif
 
             return result;
