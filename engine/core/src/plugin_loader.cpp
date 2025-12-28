@@ -37,7 +37,7 @@ namespace nebula {
 
     std::vector<std::string> probe_plugins(const std::string& dir, bool call_on_load)
     {
-        std::vector<std::string> result;
+        std::vector<std::string> results;
         auto files = list_plugin_files(dir);
 
         for (const auto& path: files) {
@@ -47,7 +47,7 @@ namespace nebula {
                 HMODULE h = LoadLibraryA(path.c_str());
                 if(!h)
                     {
-                        result.push_back(label + " => LoadLibrary failsd");
+                        results.push_back(label + " => LoadLibrary failsd");
                         continue;
                     }
                 auto create = reinterpret_cast<CreatePluginFunc>(GetProcAddress(h, "CreatePlugin"));
@@ -55,19 +55,19 @@ namespace nebula {
                     
                 if(!create || !destroy)
                 {
-                    result.push_back(label + " => missing CreatePlugin/DestroyPlugin");
+                    results.push_back(label + " => missing CreatePlugin/DestroyPlugin");
                     FreeLibrary(h);
                     continue;
                 }
                 
                 Plugin* p = create();
                 if(!p) {
-                    result.push_back(label + " => CreatePlugin return null");
+                    results.push_back(label + " => CreatePlugin return null");
                     FreeLibrary(h);
                     continue;
                 }
 
-                result.push_back(label + " => " + std::string(p->name()));
+                results.push_back(label + " => " + std::string(p->name()));
                 if(call_on_load) p->on_load();
 
                 destroy(p);
@@ -104,7 +104,7 @@ namespace nebula {
 
             #endif
 
-            return result;
+            return results;
         }
     }
 }
