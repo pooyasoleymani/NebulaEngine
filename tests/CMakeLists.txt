@@ -1,4 +1,4 @@
-find_package(Python3 REQUIRED COMPONENTS Interpreter)
+find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
 
 add_executable(test_core ${CMAKE_CURRENT_SOURCE_DIR}/core_tests/core_test.cpp)
 
@@ -26,5 +26,6 @@ add_test(
 )
 
 set_tests_properties(py_import PROPERTIES
-    ENVIRONMENT "PYTHONPATH=${CMAKE_BINARY_DIR}/python/$<CONFIG>;PYTHONHOME="
+    ENVIRONMENT "PYTHONPATH=${CMAKE_BINARY_DIR}/python/$<CONFIG>"
 )
+
