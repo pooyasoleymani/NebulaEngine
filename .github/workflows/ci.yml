@@ -2,9 +2,9 @@ name: C++ CI
 
 on:
   push:
-    branches: [develop, main]
+    branches: [develop]
   pull_request:
-    branches: [develop, main]
+    branches: [main]
 
 jobs:
   Build-and-Tests:
@@ -27,6 +27,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
 
       - name: Set reusable strings
         id: strings
@@ -37,7 +39,7 @@ jobs:
         if: runner.os != 'Windows'
         run: |
           sudo apt-get update || true
-          sudo apt-get install -y cmake g++ catch2 || true
+          sudo apt-get install -y cmake g++ || true
           sudo apt-get install -y gcovr || true 
       
       - name: Install dependencies (Windows)
@@ -53,8 +55,8 @@ jobs:
           -S ${{ github.workspace }}
 
       - name: Build
-        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }} --verbose
 
       - name: Test
-        working-directory: ${{ steps.strings.outputs.build-output-dir }}
-        run: ctest --build-config ${{ matrix.build_type }}
+        working-directory: ${{ steps.strings.outputs.build-output-dir }} 
+        run: ctest --build-config ${{ matrix.build_type }} --verbose

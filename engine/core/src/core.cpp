@@ -1,5 +1,21 @@
-#include "nebula/core.hpp"
+#include "pch.hpp"
+#include "include/nebula/core.hpp"
+#include "include/nebula/plugin_loader.hpp"
+#include "version.hpp"
 
-std::string nebula::Core::version() const {
-     return "Nebula Core 0.1.0";
-     }
+namespace nebula {
+     Core* CreateCore() { return new Core(); }
+     
+     void DestroyCore(Core* p) {delete p;}
+
+     const char* Core::Version() const { return BUILD_VERSION; }
+     
+     void Core::LoadConfig(std::string& cfg)
+{
+     if (cfg == "config.ini")
+          {
+               std::cout << "config loaded\n";
+          }
+     else throw std::runtime_error(cfg);
+};
+}

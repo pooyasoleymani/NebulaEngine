@@ -4,6 +4,10 @@
 
 namespace nebula {
 
+    /**
+ * @brief PluginA class inherit from Plugin interface and ovrride 
+ * on_load and name methods.
+ */ 
     class PluginA: public Plugin {
         public:
             const char* name() const override {
@@ -20,8 +24,20 @@ namespace nebula {
                 std::cout << "Plugin A loaded!" << std::endl;
             }
     };  
-}; // namespace nebula
 
-extern "C" NUBELA_API nebula::Plugin* create_plugin() {
-    return new nebula::PluginA();
+/**
+ * @brief This function create Plugin.
+ * @return Plugin*
+ */ 
+extern "C" NUBELA_API Plugin* CreatePlugin() {
+    return new PluginA();
+    }
+
+/**
+ * @brief This function destroy Plugin.
+ * @return void
+ */
+extern "C" NUBELA_API void DestroyPlugin(Plugin* p) {
+    delete p;
 }
+}; // namespace nebula

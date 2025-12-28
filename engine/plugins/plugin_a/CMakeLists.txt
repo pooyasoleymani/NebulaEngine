@@ -1,3 +1,5 @@
+add_compile_definitions(NEBULA_PLUGIN_EXPORTS)
+
 add_library(plugin_a SHARED src/plugin_a.cpp)
 
 target_include_directories(plugin_a PUBLIC include interfaces)
